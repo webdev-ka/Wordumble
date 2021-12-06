@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+		.hide{
+			display:block;
+		}
+	</style>
+</head>
+<body>
+<h1 class="msg"></h1>
+<input type="text" class="value" hidden>
+<button class="btn">play</button>
+
+<script type="text/javascript">
+	var msg=document.querySelector(".msg");
+	var value=document.querySelector(".value");
+	var btn=document.querySelector(".btn");
+	let play=false;
+	var words=['apple','banana','pineapple','grapes','oranges','kiwi','mango','pomegranate','guava','pear','papaya','cheery','blueberry','strawberry'];
+
+	function jumbleWord(word){ 
+		var temp,j;
+			for(i=word.length-1;i>=0;i--)
+			{
+				j=Math.floor(Math.random()*(i+1));
+				temp=word[i];
+				word[i]=word[j];
+				word[j]=temp;
+
+			}
+			return word.join("");//convert array to string and return it
+	}
+	function fetchWord(){
+		var i=Math.floor(Math.random()*words.length);//return random words from index 0 to words.length-1
+		
+		return words[i];
+	}
+	btn.addEventListener("click",function(){
+		var word;
+		if(play==false){
+			play=true;//if game is not on make it true
+			value.classList.toggle('hide');//make input field visible wheb game play start
+			btn.innerHTML="guess";//change buttton title to guess
+			
+			word=fetchWord();
+			msg.innerHTML=jumbleWord(word.split(""));
+		}
+				/*Now on clicking on btn,click event triggers but play is true so it will jump to else part*/	
+			else{
+				if(value.value.trim()==word.trim())
+			{	msg.innerHTML="correct";
+				btn.innerHTML="Play Again";
+
+				play=false;
+
+			}
+			else{
+				msg.innerHTML="Wrong Answer";
+				value.classList.toggle('hide');
+				btn.innerHTML="Try Again!!"
+
+			}
+}
+		
+			
+	});
+
+</script>
+</body>
+</html>
